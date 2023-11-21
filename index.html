@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVC Example</title>
+</head>
+
+<body>
+
+    <div id="user-details"></div>
+    <input type="text" id="name-input" placeholder="Enter name">
+    <input type="text" id="age-input" placeholder="Enter age">
+    <button onclick="updateUser()">Update User</button>
+
+    <script>
+        // Model (Модель)
+        class UserModel {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+        }
+
+        // View (Вид)
+        class UserView {
+            displayUserDetails(user) {
+                document.getElementById('user-details').innerHTML = `User: ${user.name}, Age: ${user.age}`;
+            }
+        }
+
+        // Controller (Контролер)
+        class UserController {
+            constructor(user, view) {
+                this.user = user;
+                this.view = view;
+            }
+
+            setUserName(name) {
+                this.user.name = name;
+            }
+
+            setUserAge(age) {
+                this.user.age = age;
+            }
+
+            updateView() {
+                this.view.displayUserDetails(this.user);
+            }
+        }
+
+        // Користувачський код
+        const user = new UserModel("John Doe", 30);
+        const view = new UserView();
+        const controller = new UserController(user, view);
+
+        // Функція для оновлення користувача з інтерфейсу
+        function updateUser() {
+            const nameInput = document.getElementById('name-input').value;
+            const ageInput = document.getElementById('age-input').value;
+
+            controller.setUserName(nameInput);
+            controller.setUserAge(ageInput);
+            controller.updateView();
+        }
+
+        // Відображення початкових даних користувача
+        controller.updateView();
+    </script>
+
+</body>
+
+</html>
